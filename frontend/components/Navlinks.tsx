@@ -27,7 +27,7 @@ function Navlinks() {
         </Link>
         { active===2 && 
         <motion.span
-          className="absolute inset-0 rounded bg-white w-full h-full rounded-md"
+          className="absolute inset-0 rounded bg-green-500 w-full h-full rounded-md"
           layoutId="navLinks"
           transition={{ duration: 0.3 }}
           onMouseEnter={()=>setActive(2)}
