@@ -4,7 +4,7 @@ import Demo from './animated/Demo'
 
 function DemoPitches() {
   return (
-    <div className='h-screen w-full bg-[#0A0A0A] px-6'>
+    <div className='h-screen w-full  px-6'>
         <div className="max-w-7xl mx-auto px-6 py-12">
             <header className="mb-8 text-center">
                 <h2 className="md:text-6xl sm:text-4xl font-serif tracking-tight text-green-800">

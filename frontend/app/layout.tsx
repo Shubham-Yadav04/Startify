@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import './globals.css'
-import Navbar from "@/components/Navbar";
-
-
 export const metadata: Metadata = {
   title: "Startify ",
   description: "Platform to advertise your startup and get noticed by the investors around the world",
@@ -15,11 +12,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="">
       <body
-        className={` antialiased`}
+        className={` antialiased dark:bg-black bg-white`}
       >
-        
         {children}
       </body>
     </html>

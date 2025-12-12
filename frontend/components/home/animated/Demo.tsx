@@ -37,7 +37,7 @@ const containerRef=useRef<HTMLDivElement | null>(null)
   return (
     <article
       key={id}
-      className="relative rounded-lg shadow-[rgba(59,130,246,0.4)] shadow-xs p-5 hover:shadow-sm  transition-shadow duration-150 overflow-hidden "
+      className="relative rounded-lg shadow-[rgba(59,130,246,0.4)] shadow-xs p-5 hover:shadow-sm  transition-shadow duration-150 overflow-hidden w-full "
       aria-labelledby={`pitch-${id}-title`}
       ref={containerRef}
       onMouseMove={(e)=>handleMouseMove(e)}
