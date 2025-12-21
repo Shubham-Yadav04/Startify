@@ -109,3 +109,31 @@
 .glow-container:hover::before {
   opacity: 1;
 }
+
+
+@keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            /* Moves exactly half the width of the duplicated container */
+            transform: translateX(-50%);
+          }
+        }
+        @keyframes scroll-reverse {
+          0% {
+            transform: translateX(-50%);
+          }
+          100% {
+            /* Moves exactly half the width of the duplicated container */
+            transform: translateX(0%);
+          }
+        }
+        .animate-scroll {
+          animation: scroll linear infinite;
+          animation-play-state: var(--state, running);  
+        }
+        .animate-scroll-reverse {
+          animation: scroll-reverse linear infinite;
+          animation-play-state: var(--state, running);  
+        }

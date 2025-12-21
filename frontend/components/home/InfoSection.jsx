@@ -46,7 +46,6 @@ return (
                 </div>
             </div>
 
-            {/* Right: preview card / illustration */}
            <InfoCard/>
         </div>
     </div>

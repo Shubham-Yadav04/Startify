@@ -1,10 +1,12 @@
 import Demo from "@/components/home/animated/Demo"
+import CommanNav from "../../../components/CommonNav"
 function page() {
   return (
-    <div className="min-h-screen text-white p-4 md:p-8 bg-[radial-gradient(circle_at_center,rgba(80,80,80,0.25),rgba(0,0,0,1))]">
+    <div className="min-h-screen text-white pt-2 px-4 md:px-8 bg-white/8">
+        <CommanNav/>
         <div className="max-w-4xl mx-auto border border-neutral-800 shadow-[5px_2px_14px_0px_rgb(64_64_64)] rounded-lg p-6 md:p-8 mb-8 ">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-                <div className="w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-black to-purple-500 rounded-full flex-shrink-0"></div>
+                <div className="w-24 h-24 md:w-32 md:h-32 bg-gradient-to-b from-slate-800 to-slate-900  backdrop-blur-md rounded-full flex-shrink-0"></div>
                 <div className="flex-1 text-center md:text-left">
                     <h1 className="text-3xl md:text-4xl font-bold mb-2">John Doe</h1>
                     <p className="text-gray-400 mb-3">john@example.com</p>
@@ -26,16 +28,14 @@ function page() {
             </div>
         </div>
 
-        {/* Pitches Section */}
-        <div className="max-w-4xl mx-auto bg-white/3 backdrop-blur-lg border border-white/2 rounded-xl p-4 
-            before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/7 before:to-black before:rounded-xl border-b-0">
-        <div className="flex flex-col items-center gap-5 h-fit">
+       
+        <div className="flex flex-col items-center gap-5 h-fit max-w-4xl mx-auto rounded-xl">
             {Array.from({ length: 3 }).map((_, index) => (
                 <Demo key={index} id={322} tags={["#billionaire","Startup"]} title={"Pitch 1 "} summary={"this is the summary of my statup"}/>
             ))}
         </div>
         </div>
-        </div>
+        
  
   )
 }

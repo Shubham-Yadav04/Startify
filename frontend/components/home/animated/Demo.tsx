@@ -11,6 +11,7 @@ type Props={
 
 }
 function Demo({id,title,tags,summary}:Props) {
+  const [hovered,setHovered]=React.useState<boolean>(false);
 const containerRef=useRef<HTMLDivElement | null>(null)
     const targetRef=useRef<HTMLDivElement | null>(null);
    const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
@@ -26,35 +27,46 @@ const containerRef=useRef<HTMLDivElement | null>(null)
 
     glow.style.transform = `translate(${x}px, ${y}px)`;
     glow.style.opacity = "1";
+    setHovered(true)
   };
 
   const handleMouseLeave = () => {
     const glow = targetRef.current;
+    setHovered(false)
     if (!glow) return;
 
     glow.style.opacity = "0";
+    
+
   };
+  const handleClick=()=>{
+    window.location.href=`${process.env.FRONTEND_URL || ""}/startup/${id}`
+  }
   return (
     <article
       key={id}
-      className="relative rounded-lg shadow-[rgba(59,130,246,0.4)] shadow-xs p-5 hover:shadow-sm  transition-shadow duration-150 overflow-hidden w-full "
+      className="relative w-[400px] min-w-[300px] h-[300px] rounded-lg shadow-[1px_3px_8px_rgba(36,120,255,0.25)]  p-5    duration-150 overflow-hidden w-full bg-gradient-to-br
+from-[#6f90c63a]
+to-transparent"
       aria-labelledby={`pitch-${id}-title`}
       ref={containerRef}
-      onMouseMove={(e)=>handleMouseMove(e)}
-      onMouseLeave={()=>handleMouseLeave()}
+      onMouseEnter={()=>setHovered(true)}
+      onMouseLeave={()=>setHovered(false)}
+      onClick={()=>handleClick()}
+      // onMouseMove={(e)=>handleMouseMove(e)}
+      // onMouseLeave={()=>handleMouseLeave()}
     >
-    <div className="
-          pointer-events-none
-          absolute 
-          w-[350px] h-[350px] 
-          -translate-x-1/2 -translate-y-1/2
-          blur-3xl
-          opacity-0
-          transition-opacity duration-300
+    
+      
+      
+    
+    <div className=" relative 
+   
+    h-full flex flex-col  gap-5
+            text-white
+
         "
-        style={{
-          background: "radial-gradient(circle, rgba(59,130,246,0.4) 0%, transparent 70%)"
-        }} ref={targetRef}></div>
+        ref={targetRef}>
       <h3
         id={`pitch-${id}-title`}
         className="text-lg font-semibold font-sans text-gray-900 dark:text-gray-100"
@@ -64,27 +76,31 @@ const containerRef=useRef<HTMLDivElement | null>(null)
       <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 font-sans italic">
         {summary}
       </p>
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-wrap gap-2 justify-start w-full">
         {tags.map((t) => (
           <span
             key={t}
-            className="text-xs px-2 py-1 bg-indigo-50 text-indigo-800 rounded-full "
+            className="text-xs px-2 py-1 bg-neutral-400 text-indigo-800 rounded-full "
           >
             {t}
           </span>
         ))}
       </div>
 
-      <div className="mt-4 flex items-center justify-between">
-        <div className="text-xs text-gray-500">Est. effort: 2-6 wks</div>
-        <button
-          type="button"
-          className="text-sm px-3 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+</div>
+ {    
+hovered && <div className="absolute inset-0 flex flex-col justify-center bg-black/20 backdrop-blur-[1px] h-full z-10 cursor-pointer">
+        
+        <h1
+        
+          className="text-md px-3 py-1 text-white rounded-md  transition-colors w-fit mx-auto mb-3 "
           aria-label={`Explore ${title}`}
         >
-          View
-        </button>
+          Click to Explore
+        </h1>
       </div>
+     
+ }
     </article>
   );
 }
