@@ -1,24 +1,24 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
-import './globals.css'
+import ThemeProviderClient from "@/components/ThemeProviderClient";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Startify ",
-  description: "Platform to advertise your startup and get noticed by the investors around the world",
+  title: "Startify",
+  description:
+    "Platform to advertise your startup and get noticed by the investors around the world",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className="">
-      <body
-        className={` antialiased dark:bg-black bg-white`}
-      >
-       
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased bg-white dark:bg-black scrollbar-hidden">
+        <ThemeProviderClient>
+          {children}
+        </ThemeProviderClient>
       </body>
     </html>
   );

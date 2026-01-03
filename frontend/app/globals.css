@@ -1,25 +1,28 @@
 @import '../styles/_variables.scss';
 @import '../styles/_keyframe-animations.scss';
-@import "tailwindcss";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 *{
   box-sizing: border-box;
   scroll-behavior: smooth;
+  
 }
+
 
 .bg-gradient-to-b {
   background-image: linear-gradient(var(--tw-gradient-stops)) !important;
 }
 .scrollbar-hidden {
   overflow: auto;
-  scrollbar-width: none;  /* Firefox */
-  -ms-overflow-style: none; /* IE + old Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .scrollbar-hidden::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
+  width: 0;
+  height: 0;
 }
 
 .card-l-cut-frame {
