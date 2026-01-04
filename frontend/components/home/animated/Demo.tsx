@@ -7,10 +7,12 @@ type Props={
     tags:string[],
     title:string,
     summary:string,
+    width?:string,
+    height?:string,
 
 
 }
-function Demo({id,title,tags,summary}:Props) {
+function Demo({id,title,tags,summary ,width,height}:Props) {
   const [hovered,setHovered]=React.useState<boolean>(false);
 const containerRef=useRef<HTMLDivElement | null>(null)
     const targetRef=useRef<HTMLDivElement | null>(null);
@@ -45,9 +47,9 @@ const containerRef=useRef<HTMLDivElement | null>(null)
   return (
     <article
       key={id}
-      className="relative w-[400px] min-w-[300px] h-[300px] rounded-lg shadow-[1px_3px_8px_rgba(36,120,255,0.25)]  p-5    duration-150 overflow-hidden w-full bg-gradient-to-br
+      className={`relative w-${width|| "full"} min-w-[300px] h-${height|| "fit"} rounded-lg shadow-[1px_3px_8px_rgba(36,120,255,0.25)]  p-5    duration-150 overflow-hidden w-full bg-gradient-to-br
 from-[#6f90c63a]
-to-transparent"
+to-transparent`}
       aria-labelledby={`pitch-${id}-title`}
       ref={containerRef}
       onMouseEnter={()=>setHovered(true)}

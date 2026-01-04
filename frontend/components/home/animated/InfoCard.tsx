@@ -79,15 +79,27 @@ motionY.set(0)
                 {/* ... inside return ... */}
                 
                     <motion.div
-                        key={demoPitchess[index].id}
-                       
-                        className="w-full max-w-md bg-gradient-to-br from-[#111] via-[#000] to-[#222] backdrop-blur-md rounded-xl p-5 card-l-cut-frame hover:shadow-[2px_5px_10px_2px_rgba(65,50,23,0.6)]"
-                        style={{
-                            transformStyle: "preserve-3d",
-                            transform: "translateZ(55px)"
-                        }}
-                        ref={childRef}
-                    >
+  key={demoPitchess[index].id}
+  ref={childRef}
+  className="
+    w-full max-w-md rounded-xl p-5
+    backdrop-blur-md
+    bg-gradient-to-br
+    from-white via-slate-50 to-white
+    shadow-[0_20px_50px_rgba(0,0,0,0.12)]
+    hover:shadow-[0_30px_80px_rgba(0,0,0,0.18)]
+    transition-shadow duration-300
+
+    dark:from-[#111] dark:via-[#000] dark:to-[#222]
+    dark:shadow-[0_25px_70px_rgba(0,0,0,0.7)]
+    dark:hover:shadow-[0_35px_90px_rgba(0,0,0,0.9)]
+    card-l-cut-frame
+  "
+  style={{
+    transformStyle: "preserve-3d",
+    transform: "translateZ(55px)",
+  }}
+>
                  
                         <InfoContent
                             key={demoPitchess[index].id}
@@ -97,9 +109,19 @@ motionY.set(0)
                         />
 
                         <div className="mt-4 flex items-center justify-start">
-                            <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black rounded-md text-sm font-semibold">
-                                View Listing
-                            </button>
+                            <button
+  className="
+    px-4 py-2 rounded-md text-sm font-semibold
+    bg-emerald-500 hover:bg-emerald-400
+    text-black
+    shadow-[0_8px_20px_rgba(16,185,129,0.35)]
+    transition
+
+    dark:shadow-[0_8px_20px_rgba(16,185,129,0.25)]
+  "
+>
+  View Listing
+</button>
                         </div>
                     </motion.div>
               
@@ -131,30 +153,68 @@ function InfoContent(props:Props){
     }
     return(
  <>
-<div className="h-48 sm:h-56 bg-[#111] rounded-md flex flex-col justify-center items-start p-4" 
-                    
-                    >
-                        <div className="w-full flex items-center justify-between">
-                            <motion.div initial={animation.initial} animate={animation.animate} transition={animation.transition}  >
-                                <div className="text-neutral-200 font-semibold">{props.title}</div>
-                                <div className="text-xs text-neutral-400 mt-1">Seed · SaaS · $120K MRR</div>
-                            </motion.div>
-                            <div className="text-xs text-neutral-400">2d ago</div>
-                        </div>
+<div
+  className="
+    h-48 sm:h-56 rounded-md p-4
+    flex flex-col justify-center items-start
 
-                        <motion.div className="mt-4 flex flex-wrap gap-2"  initial={animation.initial} animate={animation.animate} transition={animation.transition} >
-                            {
-                            props.tags?.map((tag,i)=>
-<span className="text-xs bg-neutral-800 text-neutral-300 px-2 py-1 rounded-full" key={i}>{tag}</span>
-                                )
-                            }
-                            
-                        </motion.div>
+    bg-white
+    border border-slate-200
+    shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]
+
+    dark:bg-[#111]
+    dark:border-white/5
+  "
+>   
+                        <div className="w-full flex items-center justify-between">
+  <motion.div {...animation}>
+    <div className="font-semibold text-slate-800 dark:text-neutral-200">
+      {props.title}
+    </div>
+
+    <div className="text-xs mt-1 text-slate-500 dark:text-neutral-400">
+      Seed · SaaS · $120K MRR
+    </div>
+  </motion.div>
+
+  <div className="text-xs text-slate-400 dark:text-neutral-400">
+    2d ago
+  </div>
+</div>
+
+                        <motion.div
+  className="mt-4 flex flex-wrap gap-2"
+  {...animation}
+>
+  {props.tags?.map((tag, i) => (
+    <span
+      key={i}
+      className="
+        text-xs px-2 py-1 rounded-full
+        bg-slate-100 text-slate-600
+        border border-slate-200
+
+        dark:bg-neutral-800
+        dark:text-neutral-300
+        dark:border-white/5
+      "
+    >
+      {tag}
+    </span>
+  ))}
+</motion.div>
                     </div>
 
-                    <motion.div  initial={animation.initial} animate={animation.animate} transition={animation.transition} className="mt-4 text-neutral-400 text-sm">
-                        {props.desc}
-                    </motion.div>
+                   <motion.div
+  {...animation}
+  className="
+    mt-4 text-sm leading-relaxed
+    text-slate-600
+    dark:text-neutral-400
+  "
+>
+  {props.desc}
+</motion.div>
                     </>
  
     )

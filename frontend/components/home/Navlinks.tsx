@@ -9,12 +9,12 @@ function Navlinks() {
       <motion.li className="relative transition-all duration-500"
     onMouseEnter={()=>setActive(1)}
       >
-        <Link href="#about" className={`${active===1?"text-black":"text-white"} relative z-10 md:text-sm text-base font-semibold transition-all duration-500 p-1 `}>
+        <Link href="#about" className={` text-black dark:text-white relative z-10 md:text-sm text-base font-bold transition-all duration-500 p-2 `}>
           About
         </Link>
         {active===1 && 
         <motion.span
-          className="absolute inset-0 rounded bg-green-600 w-full h-full rounded-md"
+          className="absolute inset-0 rounded bg-slate-400 dark:bg-green-700 w-full h-full rounded-md"
           layoutId="navLinks"
           
           transition={{ duration: 0.3 }}
@@ -22,12 +22,12 @@ function Navlinks() {
 }
       </motion.li>
       <motion.li className="relative" onMouseEnter={()=>setActive(2)}>
-        <Link href="/startups" className={`${active===2?"text-black":"text-white"} relative z-10 md:text-sm text-base font-semibold transition-all duration-500 p-1 `}>
+        <Link href="/startups" className={`text-black dark:text-white  relative z-10 md:text-sm text-base font-bold transition-all duration-500 p-2 `}>
           Ideas
         </Link>
         { active===2 && 
         <motion.span
-          className="absolute inset-0 rounded bg-green-500 w-full h-full rounded-md"
+          className="absolute inset-0 rounded bg-slate-400 dark:bg-green-700  w-full h-full rounded-md"
           layoutId="navLinks"
           transition={{ duration: 0.3 }}
           onMouseEnter={()=>setActive(2)}

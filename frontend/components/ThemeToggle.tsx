@@ -30,7 +30,7 @@ setMounted(true);
             : "dark"
         )
       }
-      className="px-3 py-1 rounded-md bg-white text-black dark:bg-neutral-800 dark:text-neutral-100 transition-colors"
+      className="px-3 py-1 rounded-md  text-black  dark:text-neutral-100 transition-colors"
     >
       {isDark ?
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
