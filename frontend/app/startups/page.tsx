@@ -33,7 +33,7 @@ function page() {
       {/* Optional subtle header spacing */}
       <div className="mb-6">
         <h2 className="text-lg font-semibold text-slate-800 dark:text-neutral-200">
-          Startup Listings
+          Startup Ideas
         </h2>
         <p className="text-sm text-slate-500 dark:text-neutral-400 mt-1">
           Discover ideas seeking early traction and funding

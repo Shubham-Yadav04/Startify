@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased bg-white dark:bg-black scrollbar-hidden">
+      <body className="antialiased bg-white dark:bg-black scrollbar-hidden h-fit">
         <ThemeProviderClient>
           {children}
         </ThemeProviderClient>

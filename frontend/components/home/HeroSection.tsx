@@ -50,11 +50,10 @@ const scale = useTransform(scrollYProgress, [0, 1], [0, 1]);
         }}
       />
 
-      {/* ================= Split Panels ================= */}
       <div className="relative z-10 w-full h-[100vh] flex items-center ">
         {/* Left Panel */}
         <motion.div
-          className="fixed top-0 left-0 w-[50%] h-full text-6xl font-bold uppercase md:text-[20vmin]
+          className="fixed top-0 left-0 w-[50%] h-full text-[10vw] font-extrabold uppercase md:text-[20vmin]
                      bg-gradient-to-br from-gray-300/90 to-white 
                       dark:bg-gradient-to-r dark:from-[#111] dark:to-black dark:shadow-none"
           style={{ x: leftX ,opacity:opacity}}
@@ -69,7 +68,7 @@ const scale = useTransform(scrollYProgress, [0, 1], [0, 1]);
           </h1>
 
           <motion.h1
-            className="absolute top-[62.5vh] md:top-[55%] w-full text-end pr-8
+            className="absolute top-[62.5vh] md:top-[55%] w-full text-end 
                        bg-clip-text text-transparent
                        bg-gradient-to-b from-slate-900 via-gray-700 to-gray-200
                        dark:from-white dark:via-white/80"
@@ -80,14 +79,14 @@ const scale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
         {/* Right Panel */}
         <motion.div
-          className="fixed top-0 right-0 w-[50%] h-full text-6xl font-bold uppercase md:text-[20vmin]
+          className="fixed top-0 right-0 w-[50%] h-full text-[10vw] font-bold uppercase md:text-[20vmin]
                     bg-gradient-to-bl from-gray-300/90 to-white 
                      dark:bg-gradient-to-l dark:from-[#111] dark:to-black dark:shadow-none"
           style={{ x: rightX ,opacity:opacity}}
         >
           <motion.h1
-            className="absolute top-[37.5vh] md:top-[17%] w-full text-start pl-8
-                       bg-clip-text text-transparent
+            className="absolute top-[37.5vh] md:top-[17%] w-full text-start
+                       bg-clip-text text-transparent 
                        bg-gradient-to-t from-slate-900 via-gray-700 to-gray-200
                        dark:from-white dark:via-white/80"
           >

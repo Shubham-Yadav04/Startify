@@ -4,8 +4,9 @@ import InfoCard from './animated/InfoCard'
 function InfoSection() {
 return (
     <div
-  className="w-full min-h-screen flex items-center justify-center py-12 px-6
-  bg-[#FDFDFE]
+  className="w-full min-h-screen flex items-center justify-center py-12 md:px-6
+  bg-gradient-to-br
+             from-[#F1FDF6]  to-white
              dark:bg-gradient-to-b
              
              dark:from-[#0b0f0d] dark:via-[#0f1412] dark:to-[#0b0f0d]"

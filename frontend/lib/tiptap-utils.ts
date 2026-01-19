@@ -376,17 +376,56 @@ export const handleImageUpload = async (
 
   // For demo/testing: Simulate upload progress. In production, replace the following code
   // with your own upload implementation.
-  for (let progress = 0; progress <= 100; progress += 10) {
-    if (abortSignal?.aborted) {
-      throw new Error("Upload cancelled")
-    }
-    await new Promise((resolve) => setTimeout(resolve, 500)) // cloudinary updload and then return that image 
-    onProgress?.({ progress })
-  }
-
-  return "/images/tiptap-ui-placeholder-image.jpg"
+if (abortSignal?.aborted) {
+  throw new Error("Upload cancelled")
 }
 
+const url = await uploadImageProgress(file, {
+  onProgress,
+  abortSignal
+})
+
+return url
+  }
+  async function uploadImageProgress(file:File, { onProgress, abortSignal}: { onProgress?: (event: { progress: number }) => void; abortSignal?: AbortSignal; }): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    const formData = new FormData()
+
+    formData.append("file", file)
+    formData.append("upload_preset", "Startify")
+
+    xhr.upload.onprogress = (e) => {
+      if (!e.lengthComputable) return
+      const percent = Math.round((e.loaded * 100) / e.total)
+      onProgress?.({ progress: percent })
+    }
+
+    xhr.onload = () => {
+      const res = JSON.parse(xhr.responseText)
+      console.log("Upload response:", res)
+      if (xhr.status >= 400) {
+        return reject(new Error(res.error?.message || "Upload error"))
+      }
+      resolve(res.secure_url)
+    }
+
+    xhr.onerror = () => reject(new Error("Upload failed"))
+
+    if (abortSignal) {
+      abortSignal.addEventListener("abort", () => {
+        xhr.abort()
+        reject(new Error("Upload cancelled"))
+      })
+    }
+const CLOUDINARY_URL= `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`;
+// console.log("Uploading to:", CLOUDINARY_URL,"timestamp:");
+    xhr.open("POST", CLOUDINARY_URL)
+    xhr.send(formData)
+  })
+}
+ 
+// api_key=455155361699552&signature=AYkM-t-duhdAcxvfWriMR7tUIxI
 type ProtocolOptions = {
   /**
    * The protocol scheme to be registered.

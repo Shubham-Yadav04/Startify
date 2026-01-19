@@ -16,38 +16,38 @@ function Demo({id,title,tags,summary ,width,height}:Props) {
   const [hovered,setHovered]=React.useState<boolean>(false);
 const containerRef=useRef<HTMLDivElement | null>(null)
     const targetRef=useRef<HTMLDivElement | null>(null);
-   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const container = containerRef.current;
-    const glow = targetRef.current;
+  //  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+  //   const container = containerRef.current;
+  //   const glow = targetRef.current;
 
-    if (!container || !glow) return;
+  //   if (!container || !glow) return;
 
-    const rect = container.getBoundingClientRect();
+  //   const rect = container.getBoundingClientRect();
 
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+  //   const x = e.clientX - rect.left;
+  //   const y = e.clientY - rect.top;
 
-    glow.style.transform = `translate(${x}px, ${y}px)`;
-    glow.style.opacity = "1";
-    setHovered(true)
-  };
+  //   glow.style.transform = `translate(${x}px, ${y}px)`;
+  //   glow.style.opacity = "1";
+  //   setHovered(true)
+  // };
 
-  const handleMouseLeave = () => {
-    const glow = targetRef.current;
-    setHovered(false)
-    if (!glow) return;
+  // const handleMouseLeave = () => {
+  //   const glow = targetRef.current;
+  //   setHovered(false)
+  //   if (!glow) return;
 
-    glow.style.opacity = "0";
+  //   glow.style.opacity = "0";
     
 
-  };
+  // };
   const handleClick=()=>{
     window.location.href=`${process.env.FRONTEND_URL || ""}/startup/${id}`
   }
   return (
     <article
       key={id}
-      className={`relative w-${width|| "full"} min-w-[300px] h-${height|| "fit"} rounded-lg shadow-[1px_3px_8px_rgba(36,120,255,0.25)]  p-5    duration-150 overflow-hidden w-full bg-gradient-to-br
+      className={`relative w-${width|| "full"} min-w-[300px] max-h-${height}  rounded-lg shadow-[1px_3px_8px_rgba(36,120,255,0.25)]  p-3    duration-150 overflow-hidden w-full bg-gradient-to-br
 from-[#6f90c63a]
 to-transparent`}
       aria-labelledby={`pitch-${id}-title`}

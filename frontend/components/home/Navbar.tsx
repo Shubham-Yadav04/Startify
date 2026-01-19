@@ -14,7 +14,6 @@ function Navbar() {
         <ThemeToggle/>
         <button className={`px-3 mr-8 py-1 bg-green-500 text-black rounded-lg  text-xl font-bold ${boogaloo.className} text-black`}
         ><a className='' href='http://localhost:8002/oauth2/authorization/google'>Pitch</a></button>
-
         </div>
     </div>
   )

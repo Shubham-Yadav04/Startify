@@ -21,14 +21,16 @@ setMounted(true);
   return (
     <button
       aria-label="Toggle theme"
-      onClick={() =>
+      onClick={() =>{
+        console.log("clicked theme toogle")
         setTheme(
           resolvedTheme === "dark"
-            ? "light"
-            : resolvedTheme === "light"
-            ? "system"
+            ? "light" 
+            // : resolvedTheme === "light"
+            // ? "system"
             : "dark"
         )
+      }
       }
       className="px-3 py-1 rounded-md  text-black  dark:text-neutral-100 transition-colors"
     >

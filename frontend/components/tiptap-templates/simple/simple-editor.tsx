@@ -72,6 +72,8 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils"
 
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss"
+import { json } from "stream/consumers"
+import { start } from "repl"
 // Table 
 
 
@@ -98,7 +100,7 @@ const MainToolbarContent = ({
       <ToolbarSeparator />
 
       <ToolbarGroup>
-        <HeadingDropdownMenu levels={[1, 2, 3, 4]} portal={isMobile} />
+        <HeadingDropdownMenu levels={[1, 2, 3, 4,5,6]} portal={isMobile} />
         <ListDropdownMenu
           types={["bulletList", "orderedList", "taskList"]}
           portal={isMobile}
@@ -184,13 +186,18 @@ const MobileToolbarContent = ({
     )}
   </>
 )
-
-export function SimpleEditor({id}:{id:string}) {
+type SimpleEditorProps = {
+  id:string;
+  formContent: string;
+  onChange: (value: string) => void;
+};
+export function SimpleEditor({id,onChange}:SimpleEditorProps) {
   const isMobile = useIsBreakpoint()
   const { height } = useWindowSize()
   const [mobileView, setMobileView] = useState<"main" | "highlighter" | "link">(
     "main"
   )
+
   const [content,setContent]= useState<string >("");
   const toolbarRef = useRef<HTMLDivElement>(null)
 
@@ -206,7 +213,7 @@ export function SimpleEditor({id}:{id:string}) {
       },
     },
     extensions: [
-      StarterKit.configure({
+      StarterKit.configure({ 
         horizontalRule: false,
         link: {
           openOnClick: true,
@@ -234,9 +241,9 @@ export function SimpleEditor({id}:{id:string}) {
     ],
     content,
     onUpdate:()=>{
-      const html = editor?.getHTML();
-      setContent(html || "")
-
+      if (!editor) return;
+      setContent( editor.getHTML());
+      onChange(editor.getHTML());
     }
   })
 
@@ -244,33 +251,30 @@ export function SimpleEditor({id}:{id:string}) {
     editor,
     overlayHeight: toolbarRef.current?.getBoundingClientRect().height ?? 0,
   })
+useEffect(() => {
+  if (!editor) return;
 
+  const current = editor.getHTML();
+  if (current !== content) {
+    editor.commands.setContent(content);
+  }
+}, [content, editor]);
   useEffect(() => {
+  
     if (!isMobile && mobileView !== "main") {
       setMobileView("main")
     }
   }, [isMobile, mobileView])
- const handlePublish = async () => {
-  console.log(content);
-    const res = await fetch(`${import.meta.env.BACKEND_URI}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/text" },
-      body: {
-        id:id,
-        content: content,  
-      },
-    });
 
-    const data = await res.json();
-    console.log("Saved pitch:", data);
-  };
+  useEffect(()=>{
+    if(localStorage){
+      const formContent= JSON.parse(localStorage?.getItem("post-draft") || '{}')?.content;
+      setContent(formContent);
+    }
+  },[])
   return (
-    <div className="max-h-screen overflow-y-hidden">
-          <div className="md:absolute relative  md:-top-1 top-0  md:right-10  right-2 flex justify-end p-3 top-3 right-4 z-30 "><button className="px-2 md:text-base text-sm  text-black font-semibold border border-netral-200 rounded-md bg-gradient-to-br from-purple-600 to-purple-200 cursor-pointer"
-      onClick={handlePublish}
-      >Pitch</button></div>
-   
-    <div className="simple-editor-wrapper">
+    <div className="max-h-screen overflow-y-hidden max-w-screen">
+    <div className="simple-editor-wrapper  border  dark:border-neutral-700 rounded-md  !w-[100%]">
 
       <EditorContext.Provider value={{ editor }}>
         <Toolbar
@@ -279,8 +283,13 @@ export function SimpleEditor({id}:{id:string}) {
             ...(isMobile
               ? {
                   bottom: `calc(100% - ${height - rect.y}px)`,
+                  maxWidth: "100%",
+              
                 }
-              : {}),
+              : {
+                  maxWidth: "100%",
+                  left:0,
+              }),
           }}
         >
           {mobileView === "main" ? (
@@ -299,8 +308,8 @@ export function SimpleEditor({id}:{id:string}) {
 
         <EditorContent
           editor={editor}
-          role="presentation"
-          className="simple-editor-content"
+          role="article"
+          className="simple-editor-content  min-w-full "
         />
       </EditorContext.Provider>
     </div>

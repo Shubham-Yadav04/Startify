@@ -2,17 +2,18 @@
 import React from 'react'
 import Demo from './animated/Demo'
 import { motion } from 'motion/react'
+import Link from 'next/link'
 function DemoPitches() {
   return (
 <div
-  className="min-h-screen w-full px-6
-             bg-gradient-to-b
-             from-white via-slate-50 to-white
+  className="min-h-screen w-full 
+             bg-gradient-to-tr
+             from-[#F1FDF6]  to-white
              dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-[#0a0a0a]"
 >
-  <div className="max-w-7xl mx-auto px-6 py-16">
+  <div className="max-w-7xl mx-auto   py-16">
     <header className="mb-12 text-center">
-  <h2 className="md:text-6xl sm:text-4xl font-serif tracking-tight">
+  <h2 className="text-[10vw] font-serif tracking-tight">
     <span
       className="bg-clip-text text-transparent
                  bg-gradient-to-br
@@ -27,7 +28,7 @@ function DemoPitches() {
   </h2>
 
   <p
-    className="mt-4 max-w-4xl mx-auto
+    className="mt-4 max-w-4xl mx-auto px-4 md:px-0
                font-sans text-center italic leading-relaxed
                text-gray-600
                dark:text-neutral-400"
@@ -37,7 +38,6 @@ function DemoPitches() {
     proposed solution and key tags. Expand to see more demos.
   </p>
 
-  {/* Subtle gradient divider */}
  <motion.div
   initial={{ opacity: 0, scaleX: 0 }}
   whileInView={{ opacity: 1, scaleX: 1 }}
@@ -79,21 +79,15 @@ function PitchGrid() {
             },
           
         ]
-
-        // const [showAll, setShowAll] = React.useState(false)
-        // const visibleCount = 3
-        // const visible = pitches.slice(0, visibleCount)
-
         return (
             
                <section
-  className="relative w-full py-12
-             bg-gradient-to-b
-             from-white via-slate-50 to-white
-             dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-[#0a0a0a]"
+  className="relative w-full py-12"
 >
   <AutoCarousel pitches={pitches} />
-  <AutoCarousel pitches={pitches} isRight />
+  <div className='hidden md:flex'>
+  <AutoCarousel pitches={pitches} isRight  />
+  </div>
 
   <div className="mt-10 flex justify-center">
     <button
@@ -110,11 +104,12 @@ function PitchGrid() {
                  transition-all duration-300
                  dark:shadow-[0_10px_30px_rgba(139,92,246,0.25)]"
     >
+      <Link href="/startups" className='decoration-none'>
       Show more
+      </Link>
     </button>
   </div>
 </section>
-
           )
         }
 
@@ -131,7 +126,7 @@ function PitchGrid() {
     <div className="relative w-full overflow-hidden py-6 group">
       {/* Left fade */}
       <div
-        className="absolute inset-y-0 left-0 w-24 z-10 pointer-events-none
+        className="absolute inset-y-0 left-0 w-12 z-10 hidden md:flex pointer-events-none
                    bg-gradient-to-r
                    from-white via-white/80 to-transparent
                    dark:from-[#0a0a0a] dark:via-[#0a0a0a]/80"
@@ -139,7 +134,7 @@ function PitchGrid() {
 
       {/* Right fade */}
       <div
-        className="absolute inset-y-0 right-0 w-24 z-10 pointer-events-none
+        className="absolute inset-y-0 right-0 w-12 z-10  hidden md:flex pointer-events-none
                    bg-gradient-to-l
                    from-white via-white/80 to-transparent
                    dark:from-[#0a0a0a] dark:via-[#0a0a0a]/80"
@@ -147,7 +142,7 @@ function PitchGrid() {
 
       <div
         className={`flex w-max ${
-          isRight ? "animate-scroll-reverse" : "animate-scroll"
+          isRight ? " animate-scroll-reverse" : " animate-scroll"
         }
         group-hover:[animation-play-state:paused]`}
         style={{
@@ -176,7 +171,7 @@ function PitchGrid() {
                 summary={p.summary}
                 tags={p.tags}
                 width='[400px]'
-               
+                height='[300px]'
               />
             </div>
           </div>

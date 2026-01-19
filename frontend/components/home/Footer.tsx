@@ -5,8 +5,8 @@ function Footer() {
   <footer
   className="
     w-full h-fit py-14
-    bg-gradient-to-r
-    from-slate-50 via-white to-slate-50
+    bg-gradient-to-br
+             from-[#F1FDF6]  to-white
     text-slate-700
 
     dark:from-[#0b0b0b] dark:via-[#0f0f0f] dark:to-[#0b0b0b]
