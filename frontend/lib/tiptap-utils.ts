@@ -388,41 +388,13 @@ const url = await uploadImageProgress(file, {
 return url
   }
   async function uploadImageProgress(file:File, { onProgress, abortSignal}: { onProgress?: (event: { progress: number }) => void; abortSignal?: AbortSignal; }): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest()
-    const formData = new FormData()
+  if (abortSignal?.aborted) return "";
 
-    formData.append("file", file)
-    formData.append("upload_preset", "Startify")
+  const url = URL.createObjectURL(file);
 
-    xhr.upload.onprogress = (e) => {
-      if (!e.lengthComputable) return
-      const percent = Math.round((e.loaded * 100) / e.total)
-      onProgress?.({ progress: percent })
-    }
-
-    xhr.onload = () => {
-      const res = JSON.parse(xhr.responseText)
-      console.log("Upload response:", res)
-      if (xhr.status >= 400) {
-        return reject(new Error(res.error?.message || "Upload error"))
-      }
-      resolve(res.secure_url)
-    }
-
-    xhr.onerror = () => reject(new Error("Upload failed"))
-
-    if (abortSignal) {
-      abortSignal.addEventListener("abort", () => {
-        xhr.abort()
-        reject(new Error("Upload cancelled"))
-      })
-    }
-const CLOUDINARY_URL= `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`;
-// console.log("Uploading to:", CLOUDINARY_URL,"timestamp:");
-    xhr.open("POST", CLOUDINARY_URL)
-    xhr.send(formData)
-  })
+  // fake progress for UX (optional)
+  onProgress?.({ progress: 100 });
+  return url;
 }
  
 // api_key=455155361699552&signature=AYkM-t-duhdAcxvfWriMR7tUIxI
