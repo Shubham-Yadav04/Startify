@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { EditorContent, EditorContext, useEditor } from "@tiptap/react"
+import { Editor, EditorContent, EditorContext, useEditor } from "@tiptap/react"
 
 // --- Tiptap Core Extensions ---
 import { StarterKit } from "@tiptap/starter-kit"
@@ -201,7 +201,7 @@ export function SimpleEditor({id,onChange}:SimpleEditorProps) {
   const [content,setContent]= useState<string >("");
   const toolbarRef = useRef<HTMLDivElement>(null)
 
-  const editor = useEditor({
+ const editor = useEditor({
     immediatelyRender: false,
     editorProps: {
       attributes: {

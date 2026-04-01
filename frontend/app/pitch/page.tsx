@@ -2,13 +2,18 @@
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor"
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
-
+import axios from 'axios'
+import type { Metadata } from "next"
+import Error from "next/error";
+export const metadata: Metadata = {
+  title: "Pitch - The future",
+  description: "Pitch your idea make it an attraction spot for the large viewer,consumer and investors ",
+};
 type FormState = {
   title: string;
   slug: string;
-  content: string;
-  coverImage: string | null;
+  HTML: string;
+  thumbnail: string | null;
 };
 
 const STORAGE_KEY = "post-draft";
@@ -16,9 +21,9 @@ const STORAGE_KEY = "post-draft";
 export default function Page() {
  const initialForm= {
     title: "",
+    thumbnail: null,
+    HTML: "",
     slug: "",
-    content: "",
-    coverImage: null,
   }
 
 const [form, setForm] = useState<FormState>(() => {
@@ -32,7 +37,7 @@ const [preview,setPreview]= useState(false);
   /* ---------------- Persist on change ---------------- */
   useEffect(() => {
     const persistData={...form};
-    persistData.coverImage=""
+    persistData.thumbnail=""
     localStorage.setItem(STORAGE_KEY, JSON.stringify(persistData));
 
   }, [form]);
@@ -48,13 +53,65 @@ const [preview,setPreview]= useState(false);
         .replace(/(^-|-$)+/g, ""),
     }));
   };
+async function srcToFile(src: string) {
+  const res = await fetch(src);   
+  const blob = await res.blob();
+  return new File([blob], "image.png", { type: blob.type });
+}
 
-  const handleSubmit = async () => {
-    console.log("Submitting:", form);
+async function uploadToCloudinary(file: File) {
+  const form = new FormData();
+  form.append("file", file);
+  form.append("upload_preset", "Startify");
 
-    // After successful save
-    localStorage.removeItem(STORAGE_KEY);
-  };
+  const res = await fetch(
+    "https://api.cloudinary.com/v1_1/dqyxlgnm0/image/upload",
+    { method: "POST", body: form }
+  );
+
+  if (!res.ok) throw new Error("Upload folder");
+  const data = await res.json();
+  return data.secure_url as string;
+}
+const handleSubmit = async () => {
+  console.log("Submitting:", form);
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(form.HTML, "text/html");
+  const images = Array.from(doc.querySelectorAll("img") as NodeListOf<HTMLImageElement>);
+  const finalContent= {...form};
+  console.log(images);
+ for (const img of images) {
+  if (img.src.startsWith("blob:")) {
+    const file = await srcToFile(img.src);
+    const cloudUrl = await uploadToCloudinary(file);
+
+    // Replace inside HTML
+    
+    finalContent.HTML = finalContent.HTML.replace(img.src, cloudUrl);
+  }
+}
+console.log(finalContent);
+
+
+
+// yha pr redis daalunga agr kabhi bhi error aata hai to saare delete krudunga images and no save operation 
+try{
+  //post request to persist database 
+  const res= await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URI}/post/`,{
+    finalContent
+  },
+  { withCredentials:true} 
+);
+console.log(res);
+// redirect to the pitches succestion or to success 
+}
+catch(e){
+console.log(e)
+}
+  // After successful save
+  console.log("success !!!")
+  localStorage.removeItem(STORAGE_KEY);
+};
 
   return (
     <div>
@@ -87,15 +144,15 @@ const [preview,setPreview]= useState(false);
 
           if (file) {
             const url= URL.createObjectURL(file);
-            setForm((p)=>({...p,coverImage:url}))
+            setForm((p)=>({...p,thumbnail:url}))
           }
             }}
             
             className="w-fit text-[1rem] px-4 py-1"
           />
           {
-           ( form.coverImage!=null &&  form.coverImage!=="" )&& <div className=" z-20 w-fit object-fit ml-5 ">
-              <Image src={form.coverImage||""} alt="preview" width={200} height={200} />
+           ( form.thumbnail!=null &&  form.thumbnail!=="" )&& <div className=" z-20 w-fit object-fit ml-5 ">
+              <Image src={form.thumbnail||""} alt="preview" width={200} height={200} />
             </div>
           }
         </div>
@@ -103,7 +160,7 @@ const [preview,setPreview]= useState(false);
         {/* Editor */}
       <SimpleEditor
       id={form?.slug}
-        formContent={form.content}
+        formContent={form.HTML}
         onChange={(value) =>
           setForm((p) => ({ ...p, content: value }))
         }

@@ -363,41 +363,58 @@ export const handleImageUpload = async (
   onProgress?: (event: { progress: number }) => void,
   abortSignal?: AbortSignal
 ): Promise<string> => {
-  // Validate file
-  if (!file) {
-    throw new Error("No file provided")
-  }
+  if (!file) throw new Error("No file provided");
 
   if (file.size > MAX_FILE_SIZE) {
     throw new Error(
       `File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`
-    )
+    );
   }
 
-  // For demo/testing: Simulate upload progress. In production, replace the following code
-  // with your own upload implementation.
-if (abortSignal?.aborted) {
-  throw new Error("Upload cancelled")
-}
-
-const url = await uploadImageProgress(file, {
-  onProgress,
-  abortSignal
-})
-
-return url
+  if (abortSignal?.aborted) {
+    throw new Error("Upload cancelled");
   }
-  async function uploadImageProgress(file:File, { onProgress, abortSignal}: { onProgress?: (event: { progress: number }) => void; abortSignal?: AbortSignal; }): Promise<string> {
-  if (abortSignal?.aborted) return "";
 
-  const url = URL.createObjectURL(file);
-
-  // fake progress for UX (optional)
-  onProgress?.({ progress: 100 });
+  const url = await uploadImageProgress(file, { onProgress, abortSignal });
   return url;
+};
+
+function sleep(ms: number) {
+  return new Promise(res => setTimeout(res, ms));
 }
- 
-// api_key=455155361699552&signature=AYkM-t-duhdAcxvfWriMR7tUIxI
+
+async function uploadImageProgress(
+  file: File,
+  {
+    onProgress,
+    abortSignal,
+  }: {
+    onProgress?: (event: { progress: number }) => void;
+    abortSignal?: AbortSignal;
+  }
+): Promise<string> {
+  let progress = 0;
+
+  // initial delay so user sees the loader
+  await sleep(200);
+
+  while (progress < 90) {
+    if (abortSignal?.aborted) throw new Error("Upload cancelled");
+
+    const step = Math.floor(Math.random() * 6) + 3; // 3–8%
+    progress = Math.min(progress + step, 90);
+
+    onProgress?.({ progress });
+    await sleep(150 + Math.random() * 200);
+  }
+setTimeout(()=>{
+onProgress?.({ progress: 100 });
+},1000)
+  return URL.createObjectURL(file);
+}
+
+
+
 type ProtocolOptions = {
   /**
    * The protocol scheme to be registered.
