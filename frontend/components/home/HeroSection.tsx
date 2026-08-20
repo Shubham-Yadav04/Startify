@@ -1,148 +1,99 @@
 "use client";
-import { Rubik_80s_Fade } from "next/font/google";
-import { scale, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
-import { motion } from "motion/react";
 
-const rubik_80 = Rubik_80s_Fade({ weight: "400" });
+import { motion } from "motion/react";
+import Link from "next/link";
 
 function HeroSection() {
-  const containerRef = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "center start"],
-  });
-
-  const leftX = useTransform(scrollYProgress, [0, 1], ["0%", "-100%"]);
-  const rightX = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const opacity = useTransform(scrollYProgress, [0, .5], [1, 0.5]);
-const scale = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full h-[200vh] overflow-hidden bg-white dark:bg-[#030303]"
+    <section
+      className="relative w-full min-h-[90vh] flex items-center justify-center pt-32 pb-20 px-4 sm:px-6 lg:px-8 text-slate-900 dark:text-white overflow-hidden transition-colors duration-300"
+      style={{
+        backgroundImage:
+          "linear-gradient(181.2deg, rgba(181,239,249,1) 10.5%, rgba(254,254,254,1) 86.8%)",
+      }}
     >
-      {/* ================= Animated Light Background ================= */}
-      <motion.div
-        aria-hidden
-        className="absolute inset-0 z-0 dark:hidden"
-        animate={{
-          backgroundPosition: [
-            "0% 0%",
-            "100% 50%",
-            "0% 100%",
-            "0% 0%",
-          ],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+      {/* Dark theme background override */}
+      <div className="absolute inset-0 bg-black opacity-0 dark:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+      {/* Centered Soft Purple Glow for Dark Theme */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none opacity-0 dark:opacity-40 blur-[130px] rounded-full transition-opacity duration-500"
         style={{
-          backgroundImage: `
-            radial-gradient(circle at 50% 80%, rgba(204, 249, 220, 0.36), transparent 80%),
-            linear-gradient(180deg, #ffffff, white 40%, #d1fae5 80%)
-          `,
-          backgroundSize: "200% 200%",
+          background:
+            "radial-gradient(circle, rgba(147,51,234,0.45) 0%, rgba(126,34,206,0.15) 50%, transparent 70%)",
         }}
+        aria-hidden="true"
       />
 
-      <div className="relative z-10 w-full h-[100vh] flex items-center ">
-        {/* Left Panel */}
-        <motion.div
-          className="fixed top-0 left-0 w-[50%] h-full text-[10vw] font-extrabold uppercase md:text-[20vmin]
-                     bg-gradient-to-br from-gray-300/90 to-white 
-                      dark:bg-gradient-to-r dark:from-[#111] dark:to-black dark:shadow-none"
-          style={{ x: leftX ,opacity:opacity}}
-        >
-          <h1
-            className="absolute top-[50vh] md:top-[37%] w-full text-end 
-                       bg-clip-text text-transparent
-                       bg-gradient-to-b from-emerald-800 via-green-800 to-green-200
-                       dark:from-green-800 dark:to-white/90"
-          >
-            Con
-          </h1>
 
-          <motion.h1
-            className="absolute top-[62.5vh] md:top-[55%] w-full text-end 
-                       bg-clip-text text-transparent
-                       bg-gradient-to-b from-slate-900 via-gray-700 to-gray-200
-                       dark:from-white dark:via-white/80"
-          >
-            Pitch
-          </motion.h1>
+
+      <div className="relative z-10 max-w-4xl mx-auto text-center">
+        {/* Top Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-white/80 dark:bg-purple-950/60 text-slate-800 dark:text-purple-300 border border-slate-300/80 dark:border-purple-800/50 mb-8 shadow-sm backdrop-blur-md"
+        >
+          <span className="w-2 h-2 rounded-full bg-teal-500 dark:bg-purple-400 animate-pulse" />
+          Startup Validation & Early Customer Discovery
         </motion.div>
 
-        {/* Right Panel */}
-        <motion.div
-          className="fixed top-0 right-0 w-[50%] h-full text-[10vw] font-bold uppercase md:text-[20vmin]
-                    bg-gradient-to-bl from-gray-300/90 to-white 
-                     dark:bg-gradient-to-l dark:from-[#111] dark:to-black dark:shadow-none"
-          style={{ x: rightX ,opacity:opacity}}
+        {/* Main Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.1] text-slate-900 dark:text-white"
         >
-          <motion.h1
-            className="absolute top-[37.5vh] md:top-[17%] w-full text-start
-                       bg-clip-text text-transparent 
-                       bg-gradient-to-t from-slate-900 via-gray-700 to-gray-200
-                       dark:from-white dark:via-white/80"
-          >
-            Grow
-          </motion.h1>
+          Build it.{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-indigo-600 to-violet-700 dark:from-purple-300 dark:to-indigo-200 drop-shadow-sm">
+            Don't guess.
+          </span>
+        </motion.h1>
 
-          <h1
-            className="absolute top-[50vh] md:top-[37%] 
-                       bg-clip-text text-transparent
-                       bg-gradient-to-b from-emerald-800 via-green-800 to-green-200
-                       dark:from-green-800 dark:to-white/90"
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-slate-700 dark:text-gray-300 leading-relaxed font-medium"
+        >
+          Put your startup idea in front of real people, get honest feedback, and find your first users before you spend months building.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <a
+            href="http://localhost:8002/oauth2/authorization/google"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-xl text-base font-semibold bg-slate-900 hover:bg-slate-800 dark:bg-purple-600 dark:hover:bg-purple-700 text-white shadow-lg shadow-slate-900/15 dark:shadow-purple-900/40 transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
-            nect
-          </h1>
+            Pitch Your Idea
+          </a>
+          <Link
+            href="#discover"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-xl text-base font-semibold bg-white/90 hover:bg-white text-slate-800 dark:bg-white/10 dark:hover:bg-white/15 dark:text-gray-200 border border-slate-300/90 dark:border-white/10 backdrop-blur-md shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Explore Ideas
+          </Link>
         </motion.div>
+
+        {/* Tagline */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+          className="mt-8 text-sm italic font-semibold text-slate-600 dark:text-gray-400"
+        >
+          "Built for founders. Powered by users."
+        </motion.p>
       </div>
-
-      {/* ================= Hero Content ================= */}
-      <div className="relative  w-full min-h-[100vh] flex items-center justify-center px-6">
-        <motion.div
-          className="relative w-full max-w-4xl h-[100vh] flex flex-col justify-center items-center text-center
-                     rounded-3xl
-                      backdrop-blur-xl
-                     dark:bg-black/40 dark:shadow-none"
-          style={{scale}}
-        >
-          <h1
-            className="font-black leading-tight
-                       text-4xl sm:text-5xl lg:text-[9vmin]
-                       bg-clip-text text-transparent
-                       bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500
-                       dark:from-white dark:to-white/60"
-          >
-            Craft Pitches That Win Attention — And Investment
-          </h1>
-
-          <p className="mt-6 max-w-2xl text-gray-800 leading-relaxed dark:text-neutral-500 font-bold">
-            Create clear, compelling, investor-ready pitches that showcase traction,
-            validate messaging, and get you in front of the right people faster.
-          </p>
-
-          <div className="mt-10">
-            <button
-              className="px-7 py-3 rounded-xl font-semibold
-                         bg-gradient-to-r from-green-600 to-emerald-500
-                         hover:to-emerald-400
-                         text-white
-                         shadow-[0_15px_40px_rgba(34,197,94,0.35)]
-                         transition-all"
-            >
-              Get Started
-            </button>
-          </div>
-        </motion.div>
-      </div>
-    </div>
+    </section>
   );
 }
 

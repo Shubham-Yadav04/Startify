@@ -1,104 +1,56 @@
-import React from 'react'
+import Link from "next/link";
+import Image from "next/image";
 
 function Footer() {
   return (
-  <footer
-  className="
-    w-full h-fit py-14
-    bg-gradient-to-br
-             from-[#F1FDF6]  to-white
-    text-slate-700
+    <footer className="w-full py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-black text-gray-700 dark:text-gray-300 border-t border-gray-200/80 dark:border-white/10 transition-colors duration-300">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-sm">
+        {/* Brand */}
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 rounded-lg bg-purple-600/10 dark:bg-purple-500/20 border border-purple-500/30 flex items-center justify-center p-1">
+            <Image
+              src="/favicon/favicon.svg"
+              alt="Startify Logo"
+              width={20}
+              height={20}
+              className="w-full h-full object-contain"
+            />
+          </div>
+          <span className="font-bold text-gray-900 dark:text-white text-base">
+            Startify
+          </span>
+          <span className="text-gray-400">|</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400">
+            Startup Validation Platform
+          </span>
+        </div>
 
-    dark:from-[#0b0b0b] dark:via-[#0f0f0f] dark:to-[#0b0b0b]
-    dark:text-neutral-300
-  "
->
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
-      {/* About */}
-      <div>
-        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
-          Startify
-        </h3>
-        <p className="text-slate-500 dark:text-neutral-400">
-          Empowering startups with modern solutions and innovative tools.
-        </p>
-      </div>
+        {/* Links */}
+        <div className="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
+          <Link href="#discover" className="hover:text-purple-600 dark:hover:text-white transition-colors">
+            Discover
+          </Link>
+          <Link href="#how-it-works" className="hover:text-purple-600 dark:hover:text-white transition-colors">
+            How It Works
+          </Link>
+          <Link href="#about" className="hover:text-purple-600 dark:hover:text-white transition-colors">
+            About
+          </Link>
+          <a href="#" className="hover:text-purple-600 dark:hover:text-white transition-colors">
+            Privacy
+          </a>
+          <a href="#" className="hover:text-purple-600 dark:hover:text-white transition-colors">
+            Terms
+          </a>
+        </div>
 
-      {/* Quick Links */}
-      <div>
-        <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
-          Quick Links
-        </h4>
-        <ul className="space-y-2 text-slate-500 dark:text-neutral-400">
-          {["Home", "About", "Services", "Blog"].map((item) => (
-            <li key={item}>
-              <a
-                href="#"
-                className="hover:text-slate-900 dark:hover:text-white transition"
-              >
-                {item}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Contact */}
-      <div>
-        <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
-          Contact Us
-        </h4>
-        <div className="space-y-2 text-slate-500 dark:text-neutral-400">
-          <p>
-            📧{" "}
-            <a
-              href="mailto:hello@startify.com"
-              className="hover:text-slate-900 dark:hover:text-white transition"
-            >
-              raylieghsy2030@gmail.com
-            </a>
-          </p>
-          <p>
-            📱{" "}
-            <a
-              href="tel:+1234567890"
-              className="hover:text-slate-900 dark:hover:text-white transition"
-            >
-              +91 9900002030
-            </a>
-          </p>
-          <p>📍 San Francisco, CA</p>
+        {/* Copyright */}
+        <div className="text-xs text-gray-500 dark:text-gray-500">
+          &copy; {new Date().getFullYear()} Startify. All rights reserved.
         </div>
       </div>
-    </div>
-
-    {/* Divider */}
-    <div
-      className="
-        border-t border-slate-200 pt-8
-        dark:border-white/10
-      "
-    >
-      <div className="flex flex-col md:flex-row justify-between items-center text-sm text-slate-500 dark:text-neutral-400">
-        <p>&copy; 2024 Startify. All rights reserved.</p>
-
-        <div className="flex gap-6 mt-4 md:mt-0">
-          {["Privacy", "Terms", "Sitemap"].map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="hover:text-slate-900 dark:hover:text-white transition"
-            >
-              {item}
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-
-)
+    </footer>
+  );
 }
-export default Footer
+
+export default Footer;
